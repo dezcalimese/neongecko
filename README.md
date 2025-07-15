@@ -1,14 +1,16 @@
-# Crypto CLI 🚀
+# NeonGecko 🦎
 
-A beautiful, neofetch-style cryptocurrency CLI tool built with Go and Charm libraries. Display crypto market data with vibrant colors and smooth terminal UI.
+A beautiful, responsive cryptocurrency CLI tool built with Go and Charm libraries. Display crypto market data with vibrant colors, smart grid layouts, and smooth terminal UI.
 
 ## Features
 
 - **📊 Market Overview**: View total crypto market cap, 24h volume, and percentage changes
 - **🔍 Coin Search**: Look up any cryptocurrency by name or symbol  
-- **📈 Detailed Stats**: Price, market cap, supply data, ATH/ATL, and performance metrics
+- **📈 Responsive Grid Layout**: Clean card-based display that adapts to terminal size
+- **💰 Detailed Stats**: Price, market cap, supply data, and performance metrics in organized cards
 - **🎨 Beautiful Design**: Time-based color themes with bright pastel accents
-- **⌨️ Intuitive Navigation**: Vim-style keyboard shortcuts
+- **⚡ Smart Caching**: Intelligent API caching to respect rate limits
+- **⌨️ Intuitive Navigation**: Quick search from any view, seamless switching
 - **🌅 Dynamic Theming**: Sandy beige for day (6 AM - 6 PM), midnight blue for night
 
 ## Installation
@@ -18,11 +20,11 @@ A beautiful, neofetch-style cryptocurrency CLI tool built with Go and Charm libr
 
 ### Build from Source
 ```bash
-git clone <repository-url>
-cd crypto-cli
+git clone https://github.com/dezcalimese/neongecko.git
+cd neongecko
 go mod tidy
-go build -o crypto-cli
-./crypto-cli
+go build -o neongecko
+./neongecko
 ```
 
 ### Install Globally
@@ -34,20 +36,20 @@ go install
 
 Run the application:
 ```bash
-./crypto-cli
+./neongecko
 ```
 
 ### Keyboard Controls
 
 #### Navigation
-- `/` or `s` - Search for a cryptocurrency
+- `/` or `s` - Search for a cryptocurrency (works from any view)
 - `Tab` - Switch between home and search views
-- `ESC` - Return to home screen
+- `ESC` - Return to home screen from coin view, or search mode from coin display
 - `q` or `Ctrl+C` - Quit application
 
 #### Data Management
 - `r` - Refresh market data
-- `h` - Show help (coming soon)
+- Auto-refresh with smart caching (5-minute TTL by default)
 
 ### Color Themes
 
@@ -70,25 +72,33 @@ This tool uses the [CoinGecko API](https://www.coingecko.com/en/api) for cryptoc
 Display of total market cap, 24h volume, and market change percentage with time-based color themes.
 
 ### Coin View
-Neofetch-style cryptocurrency information including:
-- Current price and market cap
-- Trading volume and supply data
-- All-time high/low with dates
-- Performance metrics (24h, 7d, 30d, 90d)
+Responsive grid layout displaying cryptocurrency information in organized cards:
+- **💰 Current Price**: Live price data
+- **📊 Market Data**: Market cap and 24h trading volume  
+- **🪙 Supply Info**: Circulating and total supply
+- **📈 Performance**: 24h, 7d, and 30d percentage changes
+
+Layout automatically adapts:
+- **Wide terminals (≥100 chars)**: 2×2 grid layout
+- **Narrow terminals (<100 chars)**: Single column layout
 
 ## Project Structure
 
 ```
-crypto-cli/
-├── main.go              # Application entry point
+neongecko/
+├── main.go              # Application entry point & view management
 ├── api/
-│   └── coingecko.go    # CoinGecko API client
+│   ├── coingecko.go    # CoinGecko API client
+│   └── cache.go        # Thread-safe caching system
 ├── ui/
 │   ├── home.go         # Home screen UI
-│   ├── coin.go         # Coin detail UI
-│   └── styles.go       # Color themes and styling
+│   ├── coin.go         # Responsive coin detail UI with grid layout
+│   └── styles.go       # Time-based color themes and styling
 ├── models/
-│   └── coin.go         # Data models
+│   └── coin.go         # Data models for API responses
+├── config/
+│   └── config.go       # Configuration management
+├── CLAUDE.md           # Development guidance
 └── README.md
 ```
 
@@ -110,15 +120,23 @@ crypto-cli/
 
 MIT License - see LICENSE file for details
 
+## Features Already Implemented
+
+- [x] **Responsive Grid Layout**: Cards automatically arrange based on terminal size
+- [x] **Smart API Caching**: Thread-safe caching with configurable TTL (default 5 minutes)
+- [x] **Configuration System**: JSON-based config with auto-creation and defaults
+- [x] **Direct Search**: Search for new coins without returning to home view
+- [x] **Time-based Theming**: Automatic day/night mode switching
+- [x] **Clean State Management**: Proper state clearing when switching views
+
 ## Future Features
 
 - [ ] Historical price charts
-- [ ] Portfolio tracking
+- [ ] Portfolio tracking  
 - [ ] Price alerts
-- [ ] Configuration file support
-- [ ] API response caching
 - [ ] Multiple currency support
-- [ ] Favorites list
+- [ ] Favorites list with quick access
+- [ ] Custom themes and color schemes
 
 ## Support
 
