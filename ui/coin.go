@@ -142,7 +142,7 @@ func (m CoinModel) View() string {
 	if m.err != nil {
 		errorContent := ErrorStyle.Render(fmt.Sprintf("Error: %v", m.err)) + "\n\n" +
 			HelpStyle.Render("Press ESC to go back to search")
-		return BaseStyle.Width(m.width).Height(m.height).Render(errorContent)
+		return BaseStyle.Render(errorContent)
 	}
 
 	switch m.mode {
@@ -170,8 +170,6 @@ func (m CoinModel) renderSearch() string {
 	)
 
 	return BaseStyle.
-		Width(m.width).
-		Height(m.height).
 		Align(lipgloss.Center).
 		Render(content)
 }
@@ -195,8 +193,6 @@ func (m CoinModel) renderCoinDisplay() string {
 	)
 
 	return BaseStyle.
-		Width(m.width).
-		Height(m.height).
 		Align(lipgloss.Center).
 		Render(content)
 }

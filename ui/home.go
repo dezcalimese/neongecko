@@ -71,24 +71,18 @@ func (m HomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m HomeModel) View() string {
 	if m.loading {
 		return BaseStyle.
-			Width(m.width).
-			Height(m.height).
 			Align(lipgloss.Center).
 			Render("Loading global crypto data...")
 	}
 
 	if m.err != nil {
 		return BaseStyle.
-			Width(m.width).
-			Height(m.height).
 			Align(lipgloss.Center).
 			Render(ErrorStyle.Render(fmt.Sprintf("Error: %v", m.err)))
 	}
 
 	if m.globalData == nil {
 		return BaseStyle.
-			Width(m.width).
-			Height(m.height).
 			Align(lipgloss.Center).
 			Render(ErrorStyle.Render("No data available"))
 	}
@@ -112,8 +106,6 @@ func (m HomeModel) View() string {
 	)
 
 	return BaseStyle.
-		Width(m.width).
-		Height(m.height).
 		Align(lipgloss.Center).
 		Render(content)
 }

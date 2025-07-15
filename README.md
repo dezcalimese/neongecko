@@ -56,7 +56,7 @@ Run the application:
 The app automatically switches themes based on your local time:
 - **🌅 Day Mode (6 AM - 6 PM)**: Sandy beige background
 - **🌙 Night Mode (6 PM - 6 AM)**: Midnight blue background
-- **🎨 Accent Colors**: Mint green, lavender, peach, sky blue, powder blue
+- **🎨 Accent Colors**: Mint green, lavender, peach, pink, powder blue
 
 ## API
 
