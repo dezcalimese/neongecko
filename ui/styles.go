@@ -14,11 +14,11 @@ var (
 	defaultBg = lipgloss.Color("#1a1a1a") // Dark default
 
 	// Accent colors - bright pastels
-	mintGreen = lipgloss.Color("#98FB98")
-	lavender  = lipgloss.Color("#E6E6FA")
-	peach     = lipgloss.Color("#FFDAB9")
-	skyBlue   = lipgloss.Color("#87CEEB")
-	pink      = lipgloss.Color("#FFB6C1")
+	mintGreen   = lipgloss.Color("#98FB98")
+	lavender    = lipgloss.Color("#E6E6FA")
+	peach       = lipgloss.Color("#FFDAB9")
+	skyBlue     = lipgloss.Color("#87CEEB")
+	powderBlue  = lipgloss.Color("#B0E0E6")
 	
 	// Status colors
 	green = lipgloss.Color("#00FF00")
@@ -102,7 +102,7 @@ var (
 
 	// Help text style
 	HelpStyle = lipgloss.NewStyle().
-		Foreground(pink).
+		Foreground(powderBlue).
 		Background(GetTimeBasedBg()).
 		Italic(true).
 		Padding(1, 0)
