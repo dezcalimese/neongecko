@@ -52,30 +52,30 @@ var (
 	BaseStyle = lipgloss.NewStyle().
 		Background(GetTimeBasedBg()).
 		Foreground(GetTextColor()).
-		Padding(1, 2)
+		Padding(2, 3)
 
 	// Title style
 	TitleStyle = lipgloss.NewStyle().
 		Bold(true).
 		Foreground(mintGreen).
 		Background(GetTimeBasedBg()).
-		Padding(0, 1).
-		MarginBottom(1)
+		Padding(1, 2).
+		MarginBottom(2)
 
 	// Header style
 	HeaderStyle = lipgloss.NewStyle().
 		Bold(true).
 		Foreground(pink).
 		Background(GetTimeBasedBg()).
-		Padding(0, 1)
+		Padding(1, 2)
 
 	// Box style for containers
 	BoxStyle = lipgloss.NewStyle().
 		Border(lipgloss.RoundedBorder()).
 		BorderForeground(lavender).
 		Background(GetTimeBasedBg()).
-		Padding(1, 2).
-		Margin(1, 0)
+		Padding(2, 3).
+		Margin(1, 1)
 
 	// Data label style
 	LabelStyle = lipgloss.NewStyle().
@@ -105,7 +105,7 @@ var (
 		Foreground(powderBlue).
 		Background(GetTimeBasedBg()).
 		Italic(true).
-		Padding(1, 0)
+		Padding(2, 1)
 
 	// Search input style
 	SearchStyle = lipgloss.NewStyle().
@@ -113,7 +113,7 @@ var (
 		BorderForeground(mintGreen).
 		Background(GetTimeBasedBg()).
 		Foreground(GetTextColor()).
-		Padding(0, 1)
+		Padding(1, 2)
 
 	// Error style
 	ErrorStyle = lipgloss.NewStyle().

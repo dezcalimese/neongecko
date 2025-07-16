@@ -202,39 +202,39 @@ func (m CoinModel) renderCoinGrid() string {
 		return ""
 	}
 
-	// Calculate responsive grid width
-	maxWidth := m.width - 10 // Leave some margin
-	cardWidth := 30
-	if maxWidth < 80 {
-		cardWidth = 25
-	}
+	// Calculate responsive grid width with better spacing
+	maxWidth := m.width - 8 // Leave some margin
+	
+	// Calculate column widths for 3-column layout
+	col1Width := maxWidth / 3      // 1/3 width for current price
+	col2Width := (maxWidth * 2) / 3 // 2/3 width for market data
+	col3Width := (maxWidth * 2) / 3 // 2/3 width for supply info
+	col4Width := maxWidth / 3      // 1/3 width for performance
 
-	// Header
+	// Header - centered title
 	header := m.renderCoinHeader()
 
-	// Create cards for different data sections
-	priceCard := m.renderPriceCard(cardWidth)
-	marketCard := m.renderMarketCard(cardWidth)
-	supplyCard := m.renderSupplyCard(cardWidth)
-	performanceCard := m.renderPerformanceCard(cardWidth)
+	// Create cards with specific widths
+	priceCard := m.renderPriceCard(col1Width)
+	marketCard := m.renderMarketCard(col2Width)
+	supplyCard := m.renderSupplyCard(col3Width)
+	performanceCard := m.renderPerformanceCard(col4Width)
 
-	// Arrange in responsive grid
+	// Arrange in the specified 3-column layout
 	var rows []string
 	
 	// Header takes full width
 	rows = append(rows, header)
 	rows = append(rows, "")
 
-	// Arrange cards in rows based on screen width
-	if m.width >= 100 {
-		// Wide screen: 2x2 grid
-		topRow := lipgloss.JoinHorizontal(lipgloss.Top, priceCard, "  ", marketCard)
-		bottomRow := lipgloss.JoinHorizontal(lipgloss.Top, supplyCard, "  ", performanceCard)
-		rows = append(rows, topRow, "", bottomRow)
-	} else {
-		// Narrow screen: single column
-		rows = append(rows, priceCard, "", marketCard, "", supplyCard, "", performanceCard)
-	}
+	// First row: Current Price (1/3) + Market Data (2/3)
+	firstRow := lipgloss.JoinHorizontal(lipgloss.Top, priceCard, "  ", marketCard)
+	rows = append(rows, firstRow)
+	rows = append(rows, "")
+
+	// Second row: Supply Info (2/3) + Performance (1/3)
+	secondRow := lipgloss.JoinHorizontal(lipgloss.Top, supplyCard, "  ", performanceCard)
+	rows = append(rows, secondRow)
 
 	return lipgloss.JoinVertical(lipgloss.Center, rows...)
 }
@@ -400,6 +400,11 @@ func (m CoinModel) renderPriceCard(width int) string {
 	lines = append(lines, HeaderStyle.Render("💰 Current Price"))
 	lines = append(lines, "")
 	lines = append(lines, ValueStyle.Render(FormatCurrency(m.coin.CurrentPrice)))
+	
+	// Add 24h change for context
+	change24h, style24h := FormatChange(m.coin.PriceChangePercentage24h)
+	lines = append(lines, "")
+	lines = append(lines, LabelStyle.Render("24h: ") + style24h.Render(change24h))
 
 	content := strings.Join(lines, "\n")
 	return BoxStyle.Width(width).Render(content)
@@ -417,6 +422,14 @@ func (m CoinModel) renderMarketCard(width int) string {
 		LabelStyle.Render("Market Cap: ") + ValueStyle.Render(FormatCurrency(m.coin.MarketCap)))
 	lines = append(lines, 
 		LabelStyle.Render("24h Volume: ") + ValueStyle.Render(FormatCurrency(m.coin.TotalVolume)))
+	lines = append(lines, "")
+	
+	// Add ATH/ATL data since we have more space
+	athDate := m.coin.AllTimeHighDate.Format("Jan 2, 2006")
+	lines = append(lines, 
+		LabelStyle.Render("All-Time High: ") + ValueStyle.Render(FormatCurrency(m.coin.AllTimeHigh)))
+	lines = append(lines, 
+		LabelStyle.Render("ATH Date: ") + ValueStyle.Render(athDate))
 
 	content := strings.Join(lines, "\n")
 	return BoxStyle.Width(width).Render(content)
@@ -443,6 +456,15 @@ func (m CoinModel) renderSupplyCard(width int) string {
 			LabelStyle.Render("Total: ") + ValueStyle.Render("∞"))
 	}
 
+	lines = append(lines, "")
+	
+	// Add all-time low since we have more space
+	atlDate := m.coin.AllTimeLowDate.Format("Jan 2, 2006")
+	lines = append(lines, 
+		LabelStyle.Render("All-Time Low: ") + ValueStyle.Render(FormatCurrency(m.coin.AllTimeLow)))
+	lines = append(lines, 
+		LabelStyle.Render("ATL Date: ") + ValueStyle.Render(atlDate))
+
 	content := strings.Join(lines, "\n")
 	return BoxStyle.Width(width).Render(content)
 }
@@ -456,10 +478,6 @@ func (m CoinModel) renderPerformanceCard(width int) string {
 	lines = append(lines, HeaderStyle.Render("📈 Performance"))
 	lines = append(lines, "")
 
-	// 24h change
-	change24h, style24h := FormatChange(m.coin.PriceChangePercentage24h)
-	lines = append(lines, LabelStyle.Render("24h: ") + style24h.Render(change24h))
-
 	// 7d change  
 	change7d, style7d := FormatChange(m.coin.PriceChangePercentage7d)
 	lines = append(lines, LabelStyle.Render("7d: ") + style7d.Render(change7d))
@@ -467,6 +485,10 @@ func (m CoinModel) renderPerformanceCard(width int) string {
 	// 30d change
 	change30d, style30d := FormatChange(m.coin.PriceChangePercentage30d)
 	lines = append(lines, LabelStyle.Render("30d: ") + style30d.Render(change30d))
+
+	// 90d change
+	change90d, style90d := FormatChange(m.coin.PriceChangePercentage90d)
+	lines = append(lines, LabelStyle.Render("90d: ") + style90d.Render(change90d))
 
 	content := strings.Join(lines, "\n")
 	return BoxStyle.Width(width).Render(content)
